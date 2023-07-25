@@ -35,10 +35,12 @@
     unused_qualifications
 )]
 
+#[cfg(not(feature = "sdk"))]
 pub mod cli;
 mod error;
 mod json_rpc;
 pub mod keygen;
+#[cfg(not(feature = "sdk"))]
 mod output_kind;
 pub mod rpcs;
 mod transfer_target;
@@ -46,6 +48,7 @@ pub mod types;
 mod validation;
 mod verbosity;
 
+#[cfg(not(feature = "sdk"))]
 use std::{
     fs,
     io::{Cursor, Read, Write},
