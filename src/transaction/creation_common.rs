@@ -1454,6 +1454,7 @@ pub(super) mod redelegate {
 pub(super) mod invocable_entity {
     use super::*;
     use casper_client::cli::{CliError, TransactionBuilderParams};
+    use casper_types::TransactionRuntime;
 
     pub const NAME: &str = "invocable-entity";
     const ACCEPT_SESSION_ARGS: bool = true;
@@ -1487,6 +1488,8 @@ pub(super) mod invocable_entity {
         let params = TransactionBuilderParams::InvocableEntity {
             entity_hash: entity_addr.into(), // TODO: Skip `entity_addr` and match directly for hash?
             entry_point,
+            runtime: TransactionRuntime::VmCasperV1,
+            transferred_value: 0,
         };
         let transaction_str_params = build_transaction_str_params(matches, ACCEPT_SESSION_ARGS);
         Ok((params, transaction_str_params))
@@ -1501,6 +1504,7 @@ pub(super) mod invocable_entity {
 pub(super) mod invocable_entity_alias {
     use super::*;
     use casper_client::cli::{CliError, TransactionBuilderParams};
+    use casper_types::TransactionRuntime;
 
     pub const NAME: &str = "invocable-entity-alias";
 
@@ -1533,6 +1537,8 @@ pub(super) mod invocable_entity_alias {
         let params = TransactionBuilderParams::InvocableEntityAlias {
             entity_alias,
             entry_point,
+            runtime: TransactionRuntime::VmCasperV1,
+            transferred_value: 0,
         };
         let transaction_str_params = build_transaction_str_params(matches, ACCEPT_SESSION_ARGS);
         Ok((params, transaction_str_params))
@@ -1547,6 +1553,7 @@ pub(super) mod invocable_entity_alias {
 pub(super) mod package {
     use super::*;
     use casper_client::cli::{CliError, TransactionBuilderParams};
+    use casper_types::TransactionRuntime;
 
     pub const NAME: &str = "package";
 
@@ -1583,6 +1590,8 @@ pub(super) mod package {
             package_hash: package_addr.into(), // TODO: Skip `package_addr` and match directly for hash?
             maybe_entity_version,
             entry_point,
+            runtime: TransactionRuntime::VmCasperV1,
+            transferred_value: 0,
         };
         let transaction_str_params = build_transaction_str_params(matches, ACCEPT_SESSION_ARGS);
         Ok((params, transaction_str_params))
@@ -1598,6 +1607,7 @@ pub(super) mod package {
 pub(super) mod package_alias {
     use super::*;
     use casper_client::cli::{CliError, TransactionBuilderParams};
+    use casper_types::TransactionRuntime;
 
     pub const NAME: &str = "package-name";
 
@@ -1634,6 +1644,8 @@ pub(super) mod package_alias {
             package_alias,
             maybe_entity_version,
             entry_point,
+            runtime: TransactionRuntime::VmCasperV1,
+            transferred_value: 0,
         };
         let transaction_str_params = build_transaction_str_params(matches, ACCEPT_SESSION_ARGS);
         Ok((params, transaction_str_params))
@@ -1650,6 +1662,7 @@ pub(super) mod session {
     use super::*;
     use crate::cli::parse;
     use casper_client::cli::{CliError, TransactionBuilderParams};
+    use casper_types::TransactionRuntime;
 
     pub const NAME: &str = "session";
 
@@ -1693,6 +1706,9 @@ pub(super) mod session {
         let params = TransactionBuilderParams::Session {
             is_install_upgrade,
             transaction_bytes,
+            runtime: TransactionRuntime::VmCasperV1,
+            transferred_value: 0,
+            seed: None,
         };
         let transaction_str_params = build_transaction_str_params(matches, ACCEPT_SESSION_ARGS);
         Ok((params, transaction_str_params))

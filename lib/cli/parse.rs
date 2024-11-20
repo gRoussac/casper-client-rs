@@ -927,7 +927,7 @@ pub(super) fn pricing_mode(
                     error,
                 }
             })?;
-            Ok(PricingMode::Classic {
+            Ok(PricingMode::PaymentLimited {
                 payment_amount,
                 gas_price_tolerance,
                 standard_payment,
@@ -1894,7 +1894,7 @@ mod tests {
             .unwrap();
             assert_eq!(
                 parsed,
-                PricingMode::Classic {
+                PricingMode::PaymentLimited {
                     payment_amount: 10,
                     gas_price_tolerance: 10,
                     standard_payment: true,

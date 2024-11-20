@@ -1,5 +1,7 @@
 use casper_types::bytesrepr::Bytes;
-use casper_types::{AddressableEntityHash, PackageHash, PublicKey, TransferTarget, URef, U512};
+use casper_types::{
+    AddressableEntityHash, PackageHash, PublicKey, TransactionRuntime, TransferTarget, URef, U512,
+};
 
 /// An enum representing the parameters needed to construct a transaction builder
 /// for the commands concerning the creation of a transaction
@@ -54,6 +56,9 @@ pub enum TransactionBuilderParams<'a> {
         entity_hash: AddressableEntityHash,
         /// The entry point for the invocable entity transaction
         entry_point: &'a str,
+        runtime: TransactionRuntime,
+        /// The amount of motes to transfer before code is executed.
+        transferred_value: u64,
     },
     /// Parameters for the invocable entity alias variant of the transaction builder
     InvocableEntityAlias {
@@ -61,6 +66,9 @@ pub enum TransactionBuilderParams<'a> {
         entity_alias: &'a str,
         /// The entry_point for the invocable entity alias transaction
         entry_point: &'a str,
+        runtime: TransactionRuntime,
+        /// The amount of motes to transfer before code is executed.
+        transferred_value: u64,
     },
     /// Parameters for the package variant of the transaction builder
     Package {
@@ -70,6 +78,10 @@ pub enum TransactionBuilderParams<'a> {
         maybe_entity_version: Option<u32>,
         /// The entry_point for the package transaction
         entry_point: &'a str,
+        /// The execution runtime to use.
+        runtime: TransactionRuntime,
+        /// The amount of motes to transfer before code is executed.
+        transferred_value: u64,
     },
     /// Parameters for the package alias variant of the transaction builder
     PackageAlias {
@@ -79,6 +91,10 @@ pub enum TransactionBuilderParams<'a> {
         maybe_entity_version: Option<u32>,
         /// The entry point for the package alias transaction
         entry_point: &'a str,
+        /// The execution runtime to use.
+        runtime: TransactionRuntime,
+        /// The amount of motes to transfer before code is executed.
+        transferred_value: u64,
     },
     /// Parameters for the session variant of the transaction builder
     Session {
@@ -86,6 +102,12 @@ pub enum TransactionBuilderParams<'a> {
         is_install_upgrade: bool,
         /// The Bytes to be run by the execution engine for the session transaction
         transaction_bytes: Bytes,
+        /// The execution runtime to use.
+        runtime: TransactionRuntime,
+        /// The amount of motes to transfer before code is executed.
+        transferred_value: u64,
+        /// The seed for the session code that is used for an installer.
+        seed: Option<[u8; 32]>,
     },
     /// Parameters for the transfer variant of the transaction builder
     Transfer {
